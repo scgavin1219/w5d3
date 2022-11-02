@@ -30,7 +30,6 @@ CREATE TABLE question_follows(
     FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
-
 CREATE TABLE replies(
     id INTEGER PRIMARY KEY,
     subject_question INTEGER NOT NULL,
@@ -68,15 +67,12 @@ VALUES
   ((SELECT id FROM users WHERE fname = 'Eugene'),(SELECT id FROM questions WHERE title = 'Soccer'));
 
 
-
 INSERT INTO
   replies (subject_question, parent_reply, body, user_id)
 VALUES
   ((SELECT id FROM questions WHERE title = 'Soccer'),2,'Pele',(SELECT id FROM users WHERE fname = 'Arthur')),
-  ((SELECT id FROM questions WHERE title = 'Soccer'),2,'Messi',(SELECT id FROM users WHERE fname = 'Eugene')),
+  ((SELECT id FROM questions WHERE title = 'Soccer'),NULL,'I think Messi',(SELECT id FROM users WHERE fname = 'Eugene')),
   ((SELECT id FROM questions WHERE title = 'Soccer'),2,'Zidane',(SELECT id FROM users WHERE fname = 'Arthur'));
-
-
 
 INSERT INTO
   question_likes (user_id, question_id)
