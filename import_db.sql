@@ -63,7 +63,8 @@ INSERT INTO
 VALUES
   ('Soccer', 'Who is the best player?', (SELECT id FROM users WHERE fname = 'Eugene')),
   ('Goals', 'Best goal ever?', (SELECT id FROM users WHERE fname = 'Dylan')),
-  ('Teams', 'What is your favorite team?', (SELECT id FROM users WHERE fname = 'Diego'))
+  ('Teams', 'What is your favorite team?', (SELECT id FROM users WHERE fname = 'Diego')),
+  ('Attack or defense', 'Where do you prefer playing?', (SELECT id FROM users WHERE fname = 'Diego'))
   ;
 
 INSERT INTO

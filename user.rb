@@ -58,4 +58,30 @@ class User
     def liked_questions
         QuestionLike.liked_questions_for_user_id(self.id)
     end
+
+    def average_karma
+        result = DBConnection.instance.execute(<<-SQL, self.id )
+            SELECT
+                CAST(COUNT(question_id) AS FLOAT)/COUNT(DISTINCT(questions.id)) AS average_karma
+            FROM
+                questions
+            LEFT JOIN question_likes ON questions.id = question_likes.question_id
+            WHERE
+                questions.user_id = ?
+        SQL
+        return nil unless result.length > 0
+        result # .map { |x| User.new(x)}
+    end
 end
+# Eugene 1 - 1 question - 2 likes / 2 avg karma
+# Dylan 2 - 1 question - 1 likes / 1 avg karma
+# Diego 3 - 2 question - 1 likes / 0.5 avg karma
+
+
+
+# FROM
+# questions
+# LEFT JOIN question_likes ON questions.user_id = question_likes.user_id
+# GROUP BY question_likes.user_id
+# HAVING 
+# question_likes.user_id = ?
