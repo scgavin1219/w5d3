@@ -44,4 +44,19 @@ class QuestionFollow
         return nil unless result.length > 0
         result.map { |x| Question.new(x) }
     end
+
+    def self.most_followed_questions(n)
+        result = DBConnection.instance.execute(<<-SQL, n)
+            SELECT
+                title, body, questions.user_id --COUNT(question_follows.user_id) AS followers
+            FROM
+                question_follows
+            JOIN questions ON question_follows.question_id = questions.id
+            GROUP BY question_id
+            ORDER BY COUNT(question_follows.user_id) DESC
+            LIMIT ?
+        SQL
+        return nil unless result.length > 0
+        result.map { |x| Question.new(x) }
+    end
 end

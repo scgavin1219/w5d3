@@ -1,5 +1,6 @@
 require_relative 'connection'
 require_relative 'reply'
+require_relative 'questionfollow'
 
 class User
     attr_accessor :id, :fname, :lname
@@ -48,5 +49,13 @@ class User
         result = Reply.find_by_user_id(self.id)
         return nil unless result.length > 0
         result
+    end
+
+    def followed_questions
+        QuestionFollow.followed_questions_for_user_id(self.id)
+    end
+
+    def liked_questions
+        QuestionLike.liked_questions_for_user_id(self.id)
     end
 end

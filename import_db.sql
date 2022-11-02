@@ -54,17 +54,27 @@ INSERT INTO
   users (fname, lname)
 VALUES
   ('Arthur', 'Miller'),
-  ('Eugene', 'Neill');
+  ('Eugene', 'Neill'),
+  ('Dylan', 'Gavin'),
+  ('Diego', 'Novaes');
 
 INSERT INTO
   questions (title, body, user_id)
 VALUES
-  ('Soccer', 'Who is the best player?', (SELECT id FROM users WHERE fname = 'Eugene'));
+  ('Soccer', 'Who is the best player?', (SELECT id FROM users WHERE fname = 'Eugene')),
+  ('Goals', 'Best goal ever?', (SELECT id FROM users WHERE fname = 'Dylan')),
+  ('Teams', 'What is your favorite team?', (SELECT id FROM users WHERE fname = 'Diego'))
+  ;
 
 INSERT INTO
   question_follows (user_id, question_id)
 VALUES
-  ((SELECT id FROM users WHERE fname = 'Eugene'),(SELECT id FROM questions WHERE title = 'Soccer'));
+  ((SELECT id FROM users WHERE fname = 'Eugene'),(SELECT id FROM questions WHERE title = 'Soccer')),
+  ((SELECT id FROM users WHERE fname = 'Eugene'),(SELECT id FROM questions WHERE title = 'Teams')),
+  ((SELECT id FROM users WHERE fname = 'Diego'),(SELECT id FROM questions WHERE title = 'Goals')),
+  ((SELECT id FROM users WHERE fname = 'Dylan'),(SELECT id FROM questions WHERE title = 'Teams')),
+  ((SELECT id FROM users WHERE fname = 'Diego'),(SELECT id FROM questions WHERE title = 'Teams')),
+  ((SELECT id FROM users WHERE fname = 'Dylan'),(SELECT id FROM questions WHERE title = 'Soccer'));
 
 
 INSERT INTO
@@ -77,4 +87,7 @@ VALUES
 INSERT INTO
   question_likes (user_id, question_id)
 VALUES
-  ((SELECT id FROM users WHERE fname = 'Arthur'),(SELECT id FROM questions WHERE title = 'Soccer'));
+    ((SELECT id FROM users WHERE fname = 'Arthur'),(SELECT id FROM questions WHERE title = 'Soccer')),
+    ((SELECT id FROM users WHERE fname = 'Diego'),(SELECT id FROM questions WHERE title = 'Soccer')),
+    ((SELECT id FROM users WHERE fname = 'Dylan'),(SELECT id FROM questions WHERE title = 'Goals')),
+    ((SELECT id FROM users WHERE fname = 'Diego'),(SELECT id FROM questions WHERE title = 'Teams'));
