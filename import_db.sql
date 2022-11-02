@@ -67,10 +67,16 @@ INSERT INTO
 VALUES
   ((SELECT id FROM users WHERE fname = 'Eugene'),(SELECT id FROM questions WHERE title = 'Soccer'));
 
+
+
 INSERT INTO
   replies (subject_question, parent_reply, body, user_id)
 VALUES
-  ((SELECT id FROM questions WHERE title = 'Soccer'),2,'Pele',(SELECT id FROM users WHERE fname = 'Arthur'));
+  ((SELECT id FROM questions WHERE title = 'Soccer'),2,'Pele',(SELECT id FROM users WHERE fname = 'Arthur')),
+  ((SELECT id FROM questions WHERE title = 'Soccer'),2,'Messi',(SELECT id FROM users WHERE fname = 'Eugene')),
+  ((SELECT id FROM questions WHERE title = 'Soccer'),2,'Zidane',(SELECT id FROM users WHERE fname = 'Arthur'));
+
+
 
 INSERT INTO
   question_likes (user_id, question_id)
