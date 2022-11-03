@@ -72,6 +72,18 @@ class User
         return nil unless result.length > 0
         result # .map { |x| User.new(x)}
     end
+
+    def save
+        raise "#{self} already in database" if self.id
+        DBConnection.instance.execute(<<-SQL, self.fname, self.lname)
+        INSERT INTO
+            users (fname, lname)
+        VALUES
+            (?, ?)
+        SQL
+        self.id = DBConnection.instance.last_insert_row_id
+    end
+   
 end
 # Eugene 1 - 1 question - 2 likes / 2 avg karma
 # Dylan 2 - 1 question - 1 likes / 1 avg karma

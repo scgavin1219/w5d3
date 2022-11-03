@@ -109,4 +109,15 @@ class Question
         QuestionLike.most_liked_questions(n)
     end
 
+     def save
+        raise "#{self} already in database" if self.id
+        DBConnection.instance.execute(<<-SQL, self.title, self.body, self.user_id)
+        INSERT INTO
+            questions (title, body, user_id)
+        VALUES
+            (?, ?, ?)
+        SQL
+        self.id = DBConnection.instance.last_insert_row_id
+    end
+
 end
